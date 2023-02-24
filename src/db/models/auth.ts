@@ -3,6 +3,7 @@ import { Schema, model } from 'mongoose'
 import { required } from './utils'
 
 export interface Auth {
+  id: string
   userId: ObjectId
   email: string
   password: string

@@ -1,6 +1,6 @@
-export function required<C extends StringConstructor | NumberConstructor>(type: C) {
+export function required<T>(type: T) {
   return {
     type,
     required: true,
-  } as const
+  }
 }

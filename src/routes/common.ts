@@ -1,20 +1,43 @@
-import type { Router } from 'express'
-import { UserModel } from '../db/models'
+import type { Request, Response, Router } from 'express'
+import type { Model } from 'mongoose'
+import { type Channel, ChannelModel, ServerModel, UserModel } from '../db/models'
+
+interface PathModelMap {
+  path: string
+  model: Model<any>
+  afterAdd?: (req: Request, res: Response, result: any) => Promise<void>
+}
 
 export function applyCommon(router: Router) {
-  const models = [
+  const models: PathModelMap[] = [
     { path: 'user', model: UserModel },
+    { path: 'server', model: ServerModel },
+    {
+      path: 'channel',
+      model: ChannelModel,
+      afterAdd: async (req, _res, channel: Channel) => {
+        if (req.body.serverId) {
+          await ServerModel.findByIdAndUpdate(req.body.serverId, {
+            $push: {
+              channels: channel.id,
+            },
+          })
+        }
+      },
+    },
   ]
-  models.forEach(({ path, model }) => {
+  models.forEach(({ path, model, afterAdd }) => {
     router.get(`/${path}/:id`, async (req, res) => {
       const { id } = req.params
       try {
         const result = await model.findById(id)
+        if (!result)
+          throw new Error('Invaild id')
         res.status(200).json(result)
       }
       catch (e) {
-        res.status(500).json({
-          message: `[${path}]: Database query error`,
+        res.status(388).json({
+          message: `[${path}]: Database query error : ${e}`,
         })
       }
     })
@@ -23,11 +46,12 @@ export function applyCommon(router: Router) {
       const content = req.body
       try {
         const result = await model.create(content)
+        afterAdd && await afterAdd(req, res, result)
         res.status(200).json(result)
       }
       catch (e) {
-        res.status(500).json({
-          message: `[${path}]: Database add error`,
+        res.status(388).json({
+          message: `[${path}]: Database add error: ${e}`,
         })
       }
     })
@@ -40,8 +64,8 @@ export function applyCommon(router: Router) {
         res.status(200).json(result)
       }
       catch (e) {
-        res.status(500).json({
-          message: `[${path}]: Database update error`,
+        res.status(388).json({
+          message: `[${path}]: Database update error: ${e}`,
         })
       }
     })
@@ -52,8 +76,8 @@ export function applyCommon(router: Router) {
         res.status(200).json(result)
       }
       catch (e) {
-        res.status(500).json({
-          message: `[${path}]: Database delete error`,
+        res.status(388).json({
+          message: `[${path}]: Database delete error: ${e}`,
         })
       }
     })

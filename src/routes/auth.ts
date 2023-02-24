@@ -7,7 +7,7 @@ import { AuthModel, UserModel } from '../db/models'
 
 export function applyAuth(router: Router) {
   router.post('/login', async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, expiresIn = '24h' } = req.body
     try {
       const userAuth = await AuthModel.findOne({ email, password })
       if (!userAuth) {
@@ -25,7 +25,7 @@ export function applyAuth(router: Router) {
         const token = JWT.sign(
           { id: userId },
           secretKey,
-          { expiresIn: '24h' },
+          { expiresIn },
         )
         res.status(200).json({
           message: 'Login success',
