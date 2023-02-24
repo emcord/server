@@ -11,8 +11,8 @@ export function applyAuth(router: Router) {
     try {
       const userAuth = await AuthModel.findOne({ email, password })
       if (!userAuth) {
-        res.status(401).json({
-          message: 'NO',
+        res.status(388).json({
+          message: 'No such user or password is wrong',
         })
       }
       else {
@@ -20,7 +20,7 @@ export function applyAuth(router: Router) {
         const user = await UserModel.findById(userId)
 
         if (!user)
-          throw new Error('No such user')
+          throw new Error('Database error')
 
         const token = JWT.sign(
           { id: userId },
@@ -60,13 +60,13 @@ export function applyAuth(router: Router) {
         })
       }
       else {
-        res.status(404).json({
+        res.status(388).json({
           message: 'This email has been registered',
         })
       }
     }
     catch (e) {
-      res.status(401).json({
+      res.status(500).json({
         message: e,
       })
     }
