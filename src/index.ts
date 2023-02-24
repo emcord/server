@@ -21,16 +21,18 @@ app.use(
     secret: secretKey,
     algorithms: ['HS256'],
   }).unless({
-    path: ['/api/login'],
+    path: [
+      '/api/login',
+      '/api/register',
+    ],
   }),
 )
 // @ts-expect-error token
 app.use((err, _req, res, _next) => {
-  consola.error(err)
   if (err.name === 'UnauthorizedError') {
     return res.send({
       status: 401,
-      message: 'Invaild token',
+      message: err.message,
     })
   }
   res.send({
