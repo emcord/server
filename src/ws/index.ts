@@ -25,15 +25,16 @@ export function initWSS(path: string, port: number) {
 
     ws.on('error', console.error)
 
-    ws.on('message', async (data) => {
-      const payload = jsonParse<WSMessagePayload>(ws, data)
-      if (payload && payload.channelId === channelId) {
-        if (athorization(payload)) {
+    ws.on('message', async (_data) => {
+      const data = jsonParse<WSMessagePayload>(ws, _data)
+      if (data && data.channelId === channelId) {
+        const [hasToken] = athorization(data)
+        if (hasToken) {
           const model = useMessageModel(channelId)
           try {
-            const result = await model.create(payload)
-            spread(channelId, ws, payload)
-            ws.send(createWSOK(result))
+            const messageResult = await model.create(data)
+            spread(channelId, ws, data)
+            ws.send(createWSOK(messageResult))
           }
           catch (e) {
             ws.send(createWSError(388, `Database add error: ${e}`))

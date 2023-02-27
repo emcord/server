@@ -42,18 +42,18 @@ export function createWSError(code: 401 | 500 | 388, message: string) {
 
 export function athorization(payload: WSMessagePayload) {
   if (!payload.token)
-    return false
+    return [false] as const
   const { token } = payload
   try {
-    JWT.verify(
+    const result = JWT.verify(
       token,
       secretKey,
     )
-    return true
+    return [true, result] as const
   }
   catch (e: any) {
     consola.error(e.message)
-    return false
+    return [false] as const
   }
 }
 
