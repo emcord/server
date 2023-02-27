@@ -6,6 +6,8 @@ specifiers:
   '@types/express': ^4.17.17
   '@types/jsonwebtoken': ^9.0.1
   '@types/node': ^18.14.0
+  '@types/ws': ^8.5.4
+  bufferutil: ^4.0.7
   consola: ^2.15.3
   crypto-js: ^4.1.1
   dotenv: ^16.0.3
@@ -19,6 +21,8 @@ specifiers:
   ts-node: ^10.9.1
   typescript: ^4.9.5
   typescript-rest: ^3.0.4
+  utf-8-validate: ^6.0.3
+  ws: ^8.12.1
 
 dependencies:
   crypto-js: 4.1.1
@@ -30,6 +34,11 @@ dependencies:
   mongoose: 6.9.2
   nodemon: 2.0.20
   typescript-rest: 3.0.4
+  ws: 8.12.1_2adebc2xdjqbcvbjxkodkhadp4
+
+optionalDependencies:
+  bufferutil: 4.0.7
+  utf-8-validate: 6.0.3
 
 devDependencies:
   '@antfu/eslint-config': 0.34.0_zbm6mgjew7sm4ssghrxdqoiad4
@@ -37,6 +46,7 @@ devDependencies:
   '@types/express': 4.17.17
   '@types/jsonwebtoken': 9.0.1
   '@types/node': 18.14.0
+  '@types/ws': 8.5.4
   consola: 2.15.3
   eslint: 8.29.0
   ts-node: 10.9.1_tncu2ai53lzgmizdedur7lbibe
@@ -1188,6 +1198,12 @@ packages:
       '@types/webidl-conversions': 7.0.0
     dev: false
 
+  /@types/ws/8.5.4:
+    resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
+    dependencies:
+      '@types/node': 18.14.0
+    dev: true
+
   /@typescript-eslint/eslint-plugin/5.46.0_7yxso2mpobsw243rg774zzo3o4:
     resolution: {integrity: sha512-QrZqaIOzJAjv0sfjY4EjbXUi3ZOFpKfzntx22gPGr9pmFcTjcFw/1sS1LJhEubfAGwuLjNrPV0rH+D1/XZFy7Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -1509,6 +1525,14 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+    dev: false
+
+  /bufferutil/4.0.7:
+    resolution: {integrity: sha512-kukuqc39WOHtdxtw4UScxF/WVnMFVSQVKhtx3AjZJzhd0RGZZldcrfSEbVsWWe6KNH253574cq5F+wpv0G9pJw==}
+    engines: {node: '>=6.14.2'}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 4.6.0
     dev: false
 
   /builtin-modules/3.3.0:
@@ -3153,6 +3177,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /node-gyp-build/4.6.0:
+    resolution: {integrity: sha512-NTZVKn9IylLwUzaKjkas1e4u2DLNcV4rdYagA4PWdPwW87Bi7z+BznyKSRwS/761tV/lzCGXplWsiaMjLqP2zQ==}
+    hasBin: true
+    dev: false
+
   /nodemon/2.0.20:
     resolution: {integrity: sha512-Km2mWHKKY5GzRg6i1j5OxOHQtuvVsgskLfigG25yTtbyfRGn/GNvIbRyOf1PSCKJ2aT/58TiuUsuOU5UToVViw==}
     engines: {node: '>=8.10.0'}
@@ -4017,6 +4046,14 @@ packages:
       punycode: 2.3.0
     dev: true
 
+  /utf-8-validate/6.0.3:
+    resolution: {integrity: sha512-uIuGf9TWQ/y+0Lp+KGZCMuJWc3N9BHA+l/UmHd/oUHwJJDeysyTRxNQVkbzsIWfGFbRe3OcgML/i0mvVRPOyDA==}
+    engines: {node: '>=6.14.2'}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 4.6.0
+    dev: false
+
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -4109,6 +4146,22 @@ packages:
 
   /wrappy/1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  /ws/8.12.1_2adebc2xdjqbcvbjxkodkhadp4:
+    resolution: {integrity: sha512-1qo+M9Ba+xNhPB+YTWUlK6M17brTut5EXbcBaMRN5pH5dFrXz7lzz1ChFSUq3bOUl8yEvSenhHmYUNJxFzdJew==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dependencies:
+      bufferutil: 4.0.7
+      utf-8-validate: 6.0.3
+    dev: false
 
   /xml-name-validator/4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}

@@ -2,8 +2,9 @@ import express from 'express'
 import consola from 'consola'
 import mongoose from 'mongoose'
 import { expressjwt } from 'express-jwt'
-import { router } from './routes'
 import { secretKey } from './consts'
+import { router } from './routes'
+import { initWSS } from './ws'
 
 mongoose
   .connect('mongodb://127.0.0.1:27017/make-a-discord-local')
@@ -14,7 +15,6 @@ mongoose
   })
 
 const app = express()
-
 app.use(express.json())
 app.use(
   expressjwt({
@@ -41,7 +41,7 @@ app.use((err, _req, res, _next) => {
   })
 })
 app.use('/api', router)
-
+initWSS('/api/ws/channel', 9527)
 app.listen(3000, () => {
   consola.success('Server started at port 3000')
 })
