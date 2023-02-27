@@ -1,10 +1,9 @@
-import type { ObjectId } from 'mongoose'
 import { Schema, model } from 'mongoose'
 import { required } from './utils'
 
 export interface Auth {
   id: string
-  userId: ObjectId
+  userId: string
   email: string
   password: string
 }

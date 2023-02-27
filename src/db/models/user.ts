@@ -6,6 +6,7 @@ export interface User {
   name: string
   hashTag: string
   avator: string
+  servers: string[]
   gender?: string
   profileInfo?: string
 }
@@ -23,6 +24,7 @@ export const UserModel = model(
     name: required(String),
     hashTag: required(String),
     avator: required(String),
+    servers: required([String]),
     gender: String,
     profileInfo: String,
   }),

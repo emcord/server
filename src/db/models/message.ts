@@ -20,7 +20,8 @@ export interface Message {
 
 const modelMap = new Map<string, Model<any>>()
 
-export function useMessageModel(db: string): Model<Message> {
+export function useMessageModel(channelId: string): Model<Message> {
+  const db = `MESSAGE-${channelId}`
   const mapedModel = modelMap.get(db)
   if (mapedModel) {
     return mapedModel
